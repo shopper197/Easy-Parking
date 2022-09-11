@@ -12,8 +12,8 @@
     <Button
         android:id="@+id/bottoneAvvio"
 
-        android:layout_width="190dp"
-        android:layout_height="60dp"
+        android:layout_width="206dp"
+        android:layout_height="83dp"
 
         android:background="@drawable/button_design"
         android:text="@string/inizio_sosta"
@@ -27,14 +27,25 @@
         app:layout_constraintVertical_bias="0.76" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/logoIniziale"
+        android:layout_width="310dp"
+        android:layout_height="261dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.283"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintVertical_bias="0.142"
+        tools:srcCompat="@drawable/test_logo" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="347dp"
+        android:layout_height="122dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottoneAvvio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoIniziale"
+        app:srcCompat="@drawable/logo_easy_parking_lot" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
