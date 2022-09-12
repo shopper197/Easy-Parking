@@ -1,25 +1,33 @@
 package com.example.easyparking
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.icu.util.Calendar
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.format.DateFormat.getLongDateFormat
 import android.text.format.DateFormat.getTimeFormat
 
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.TimePicker
+import android.widget.*
+import androidx.activity.result.ActivityResult
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import com.example.easyparking.databinding.ActivityMainBinding
 import com.example.easyparking.databinding.ActivityParking2Binding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.timepicker.TimeFormat
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -30,18 +38,31 @@ import kotlin.math.min
 class ParkingActivity2 : AppCompatActivity() {
 
     private lateinit var binding : ActivityParking2Binding
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     private  var oraScelta :Int = 0
     private  var minutiScelta :Int = 0
     private var meseScelta : Int = 0
     private var giornoScelta : Int = 0
     private var annoScelta : Int = 0
+    private var longitudine : Double = 0.0
+    private var latitudine : Double = 0.0
+    private lateinit var photo : Bitmap
+    companion object{
+        private const val CAMERA_PERMISSION_CODE =1
+        private const val CAMERA =1
+
+    }
 
     @SuppressLint("NewApi")
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding =ActivityParking2Binding.inflate(layoutInflater)
+        fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(this)
+
+
         setContentView(R.layout.activity_parking2)
 
             creteNotificationChannel()
@@ -72,18 +93,24 @@ class ParkingActivity2 : AppCompatActivity() {
         //setto ora e data attuali
 
         val rightNow = Calendar.getInstance()
-        var Hour24Format : String =rightNow.get(Calendar.HOUR_OF_DAY).toString()
-        val dataOdierna : Int =rightNow.get(Calendar.DAY_OF_MONTH)
-            Hour24Format=Hour24Format.toString()
+        var minutiOra :Int =rightNow.get(Calendar.MINUTE)
+        var oreOra :Int= rightNow.get(Calendar.HOUR_OF_DAY)
+        var Hour24Format : String ="$oreOra:$minutiOra"
+        var giornoOra :Int = rightNow.get(Calendar.DAY_OF_MONTH)
+        var meseOra :Int = rightNow.get(Calendar.MONTH)
+        var annoOra :Int = rightNow.get(Calendar.YEAR)
+
+        val dataOdierna : String="$giornoOra/$meseOra/$annoOra"
+
 
         val oraAttualeMostrata : TextView =findViewById(R.id.OraAttuale)
         val dataAttualeMostrata : TextView =findViewById(R.id.dataAttuale)
 
-        oraAttualeMostrata.setText(Hour24Format.toString())
-        dataAttualeMostrata.setText(dataOdierna.toString())
+        oraAttualeMostrata.setText(Hour24Format)
+        dataAttualeMostrata.setText(dataOdierna)
 
         val avvioSosta : Button = findViewById(R.id.Conferma)
-        avvioSosta.setOnClickListener(View.OnClickListener { startActivity(Intent(this, MainActivity::class.java));scheduleNotification() })
+        avvioSosta.setOnClickListener(View.OnClickListener { salvaDati();scheduleNotification() })
 
         setOra.setOnClickListener(){
             val currentTime = Calendar.getInstance()
@@ -96,6 +123,27 @@ class ParkingActivity2 : AppCompatActivity() {
                 minutiScelta = minute
 
             }, startHour, startMinute, true ).show()
+        }
+
+
+    }
+
+    private fun salvaDati() {
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            return
+        }
+        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+            longitudine= location.longitude
+            latitudine = location.latitude
         }
 
 
@@ -146,8 +194,8 @@ class ParkingActivity2 : AppCompatActivity() {
         val timeFormat = "HH/mm"
         AlertDialog.Builder(this)
             .setTitle("Notification scheduled")
-            .setMessage("At:"+dateFormat.format(date)+ " "+timeFormat.format(date) )
-            .setPositiveButton("okay"){_,_->}
+            .setMessage("la notifica per la tua sosta è stata impostata correttamente" )
+            .setPositiveButton("okay"){_,_->startActivity(Intent(this, MainActivity::class.java))}
             .show()
 
 
@@ -174,6 +222,51 @@ class ParkingActivity2 : AppCompatActivity() {
         dataFine.setText(sdf.format(myCalendar.time))
     }
 
+    fun goBackHome(view: View) {
+        startActivity(Intent(this, MainActivity::class.java))
+    }
+
+    fun takePhoto(view: View) {
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA) ==PackageManager.PERMISSION_GRANTED){
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(intent, CAMERA)
+        }else{
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),
+                CAMERA_PERMISSION_CODE)
+        }
 
 
-}
+        }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode== CAMERA_PERMISSION_CODE){
+            if(grantResults.isNotEmpty()&&grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(intent, CAMERA)
+            }else{
+                Toast.makeText(this,"Hai rifiutato i permessi, per favore vai a permettterli nelle impostazioni",
+                Toast.LENGTH_LONG).show(
+                )
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode==Activity.RESULT_OK){
+            if(requestCode ==CAMERA){
+                 photo = data!!.extras!!.get("data") as Bitmap
+                val photoShower :ImageView= findViewById(R.id.photoShower)
+                photoShower.setImageBitmap(photo)
+            }
+        }
+
+    }
+    }
+
+

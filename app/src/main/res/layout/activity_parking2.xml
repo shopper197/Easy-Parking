@@ -8,15 +8,17 @@
     android:background="@drawable/gradient_background">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/photoShower"
         android:layout_width="251dp"
         android:layout_height="237dp"
+        android:onClick="takePhoto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.145"
-        app:srcCompat="@drawable/fotocamera" />
+        app:srcCompat="@drawable/fotocamera"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/dataAttuale"
@@ -27,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/photoShower"
         app:layout_constraintVertical_bias="0.086" />
 
     <TextView
@@ -107,5 +109,19 @@
         app:layout_constraintStart_toStartOf="@+id/SetData"
         app:layout_constraintTop_toTopOf="@+id/OraSettata"
         app:layout_constraintVertical_bias="0.483"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/goBackHome"
+        android:layout_width="62dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="12dp"
+        android:onClick="goBackHome"
+        app:icon="@drawable/back"
+        app:iconSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

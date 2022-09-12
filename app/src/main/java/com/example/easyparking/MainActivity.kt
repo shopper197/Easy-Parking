@@ -23,8 +23,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val bottoneAvvio : Button = findViewById(R.id.bottoneAvvio)
+        val oldSosta :Button = findViewById(R.id.oldSosta)
         bottoneAvvio.setOnClickListener(View.OnClickListener { startActivity(Intent(this, ParkingActivity2::class.java)) })
-
+        oldSosta.setOnClickListener(View.OnClickListener {startActivity(Intent(this,ParkingCheck::class.java))})
 
     }
 
