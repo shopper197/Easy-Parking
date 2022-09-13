@@ -1,8 +1,11 @@
 package com.example.easyparking
 
+
+import android.app.DialogFragment
 import android.content.ContextWrapper
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -23,10 +26,14 @@ class ParkingCheck : AppCompatActivity() {
     var giorno: Int = 0;
     var mese: Int = 0;
     var anno: Int = 0;
-    var latitudine: Double = 0.0
-    var longitudine: Double = 0.0
+    var latitudine: Float = 0.0F
+    var longitudine: Float = 0.0F
     lateinit var parkShower: ImageView
     var pathing : String =""
+
+    companion object{
+        var b:Bitmap?=null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,15 +83,15 @@ class ParkingCheck : AppCompatActivity() {
         giorno = SharedPreferences.getInt("giorno", 0)
         mese = SharedPreferences.getInt("mese", 0)
         anno = SharedPreferences.getInt("anno", 0)
-        latitudine = SharedPreferences.getString("long", "0.0")?.toDouble()!!
-        longitudine = SharedPreferences.getString("lati", "0.0")?.toDouble()!!
+        latitudine = SharedPreferences.getFloat("long", 0.0F)
+        longitudine = SharedPreferences.getFloat("lati", 0.0F)
         pathing= SharedPreferences.getString("path","not found")!!
     }
 
     private fun loadImageFromStorage(path: String) {
         try {
             val f = File(path, "profile.jpg")
-            val b = BitmapFactory.decodeStream(FileInputStream(f))
+             b = BitmapFactory.decodeStream(FileInputStream(f))
 
             parkShower.setImageBitmap(b)
         } catch (e: FileNotFoundException) {
@@ -92,4 +99,13 @@ class ParkingCheck : AppCompatActivity() {
         }
 
     }
+
+    fun fullScreenOpener(view: View) { startActivity(
+        Intent(
+            this,
+            immagineFullScreen::class.java
+        ))
+    }
+
+
 }

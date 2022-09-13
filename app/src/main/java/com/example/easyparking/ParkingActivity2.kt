@@ -304,6 +304,8 @@ class ParkingActivity2 : AppCompatActivity() {
         }
         return directory.getAbsolutePath()
     }
-    }
+
+
+}
 
 
