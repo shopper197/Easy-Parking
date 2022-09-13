@@ -4,35 +4,31 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.icu.util.Calendar
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.provider.MediaStore
-import android.text.format.DateFormat.getLongDateFormat
-import android.text.format.DateFormat.getTimeFormat
-
+import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.activity.result.ActivityResult
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
-import com.example.easyparking.databinding.ActivityMainBinding
 import com.example.easyparking.databinding.ActivityParking2Binding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.material.timepicker.TimeFormat
-import java.text.DateFormat
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.min
 
 
 class ParkingActivity2 : AppCompatActivity() {
@@ -47,6 +43,7 @@ class ParkingActivity2 : AppCompatActivity() {
     private var annoScelta : Int = 0
     private var longitudine : Double = 0.0
     private var latitudine : Double = 0.0
+    private var path:String=""
     private lateinit var photo : Bitmap
     companion object{
         private const val CAMERA_PERMISSION_CODE =1
@@ -110,7 +107,7 @@ class ParkingActivity2 : AppCompatActivity() {
         dataAttualeMostrata.setText(dataOdierna)
 
         val avvioSosta : Button = findViewById(R.id.Conferma)
-        avvioSosta.setOnClickListener(View.OnClickListener { salvaDati();scheduleNotification() })
+        avvioSosta.setOnClickListener(sostaAvviata())
 
         setOra.setOnClickListener(){
             val currentTime = Calendar.getInstance()
@@ -128,23 +125,38 @@ class ParkingActivity2 : AppCompatActivity() {
 
     }
 
+    private fun sostaAvviata(): View.OnClickListener? {
+        return View.OnClickListener {
+             salvaDati()
+            scheduleNotification()
+        }
+
+    }
+
     private fun salvaDati() {
 
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-
-            return
-        }
-        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+       //TODO fixare location
+        /*fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
             longitudine= location.longitude
             latitudine = location.latitude
-        }
+            Log.d("logitudine",longitudine.toString())
+            Log.d("latitudine",latitudine.toString())
+        }*/
+        val sharedPreferences = getSharedPreferences("variabili", MODE_PRIVATE)
+        val editor =sharedPreferences.edit()
+        editor.apply{
+            putFloat("lati",latitudine.toFloat())
+            putFloat("long",longitudine.toFloat())
+            putInt("minu",minutiScelta)
+            putInt("ore",oraScelta)
+            putInt("giorno",giornoScelta)
+            putInt("mese",meseScelta)
+            putInt("anno",annoScelta)
+            putString("path",path)
+        }.apply()
+        Log.d("ddd sono arrivato qui"," ddd")
+        dataShare.pathShare=path.toString()
+
 
 
     }
@@ -263,9 +275,34 @@ class ParkingActivity2 : AppCompatActivity() {
                  photo = data!!.extras!!.get("data") as Bitmap
                 val photoShower :ImageView= findViewById(R.id.photoShower)
                 photoShower.setImageBitmap(photo)
+                saveToInternalStorage(photo)
             }
         }
 
+    }
+    private fun saveToInternalStorage(bitmapImage: Bitmap): String? {
+        val cw = ContextWrapper(applicationContext)
+
+        val directory: File = cw.getDir("imageDir", MODE_PRIVATE)
+        val mypath = File(directory, "profile.jpg")
+        path=directory.absolutePath
+
+        Log.d("ddd ",directory.absolutePath)
+        var fos: FileOutputStream? = null
+        try {
+            fos = FileOutputStream(mypath)
+
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            try {
+                fos?.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+        return directory.getAbsolutePath()
     }
     }
 
