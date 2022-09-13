@@ -63,6 +63,8 @@ class ParkingActivity2 : AppCompatActivity() {
         setContentView(R.layout.activity_parking2)
 
             creteNotificationChannel()
+        fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(this)
+        checkLocationPermissions()
 
         val setDate : Button = findViewById(R.id.SetData)
         val setOra : Button = findViewById(R.id.SetOra)
@@ -125,6 +127,24 @@ class ParkingActivity2 : AppCompatActivity() {
 
     }
 
+    private fun checkLocationPermissions() {
+        val task = fusedLocationProviderClient.lastLocation
+
+        if(ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        ){
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),101)
+            return
+        }
+        task.addOnSuccessListener {
+            if(it!=null){
+                latitudine=it.latitude
+                longitudine=it.longitude
+            }
+        }
+
+    }
+
     private fun sostaAvviata(): View.OnClickListener? {
         return View.OnClickListener {
              salvaDati()
@@ -155,7 +175,7 @@ class ParkingActivity2 : AppCompatActivity() {
             putString("path",path)
         }.apply()
         Log.d("ddd sono arrivato qui"," ddd")
-        dataShare.pathShare=path.toString()
+
 
 
 

@@ -16,6 +16,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
@@ -31,6 +33,7 @@ class ParkingCheck : AppCompatActivity() {
     lateinit var parkShower: ImageView
     var pathing : String =""
 
+
     companion object{
         var b:Bitmap?=null
     }
@@ -42,18 +45,17 @@ class ParkingCheck : AppCompatActivity() {
         val parkingFinder: Button = findViewById(R.id.parkingFinder)
 
 
-        Log.d("ddd dataSHare: ",dataShare.pathShare)
-        Log.d("ddd  shared preferences",pathing)
+
 
         load()
         updateText()
         loadImageFromStorage(pathing)
-        Log.d("ddd classe shared",dataShare.pathShare)
-        Log.d("ddd shared preferences",pathing)
+
+
 
         parkingFinder.setOnClickListener() {
             val goggleUrl = "https://maps.google.com/?q="
-            val url = "$goggleUrl$latitudine,$longitudine"
+            val url = "$goggleUrl$longitudine,$latitudine"
             val i = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(i)
         }
