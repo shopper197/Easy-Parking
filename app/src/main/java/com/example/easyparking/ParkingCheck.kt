@@ -75,7 +75,11 @@ class ParkingCheck : AppCompatActivity() {
         val dataScelta: TextView = findViewById(R.id.dataScelta)
         dataScelta.setText("$giorno/$mese/$anno")
         val oraScelta: TextView = findViewById(R.id.oraScelta)
-        oraScelta.setText("$ore:$minuti")
+        if(minuti>9){
+        oraScelta.setText("$ore:$minuti")}
+        else{
+            oraScelta.setText("$ore:0$minuti")
+        }
     }
 
     fun load() {

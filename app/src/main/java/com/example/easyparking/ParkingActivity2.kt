@@ -28,6 +28,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.time.Year
 import java.util.*
 
 
@@ -73,7 +74,9 @@ class ParkingActivity2 : AppCompatActivity() {
 
 
         val myCalendar = Calendar.getInstance()
+
         val datePicker = DatePickerDialog.OnDateSetListener { View, year, mounth, dayOfMounth->
+
             myCalendar.set(Calendar.YEAR, year)
             annoScelta = year
             meseScelta = mounth
@@ -84,8 +87,9 @@ class ParkingActivity2 : AppCompatActivity() {
         }
 
         setDate.setOnClickListener{
-            DatePickerDialog(this,datePicker,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(
-                Calendar.DAY_OF_YEAR)).show()
+            val calendarioOra=Calendar.getInstance()
+            DatePickerDialog(this,datePicker,calendarioOra[Calendar.YEAR],calendarioOra[Calendar.MONTH],
+                calendarioOra[Calendar.DAY_OF_MONTH]).show()
         }
 
 
@@ -149,6 +153,7 @@ class ParkingActivity2 : AppCompatActivity() {
         return View.OnClickListener {
              salvaDati()
             scheduleNotification()
+            scheduleNotificationAnticipata()
         }
 
     }
@@ -211,6 +216,31 @@ class ParkingActivity2 : AppCompatActivity() {
 
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val time = getTime()
+        Log.d("dddd",time.toString())
+        alarmManager.setAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            time,
+            pendingIntent
+        )
+        showAlert(time, title, message)
+    }
+    @SuppressLint("NewApi")
+    private fun scheduleNotificationAnticipata() {
+
+        val intent = Intent(applicationContext, Notification::class.java)
+        val title = "Manca poco tempo"
+        val message= "La tua sosta Termina tra 10 minuti"
+        intent.putExtra(messageExtra, message)
+        val pendingIntent = PendingIntent.getBroadcast(
+            applicationContext,
+            notificationID,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+
+        )
+
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val time = getTime()-900000
         alarmManager.setAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             time,
@@ -312,7 +342,7 @@ class ParkingActivity2 : AppCompatActivity() {
         try {
             fos = FileOutputStream(mypath)
 
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos)
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fos)
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
