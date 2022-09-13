@@ -18,37 +18,47 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.145"
         app:srcCompat="@drawable/fotocamera"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        />
 
     <TextView
         android:id="@+id/dataAttuale"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="170dp"
+        android:layout_height="30dp"
+        android:background="@drawable/round_corner"
         android:text="data"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/photoShower"
-        app:layout_constraintVertical_bias="0.086" />
+        app:layout_constraintVertical_bias="0.083" />
 
     <TextView
+        android:textAlignment="center"
+        android:background="@drawable/round_corner"
         android:id="@+id/OraAttuale"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="170dp"
+        android:layout_height="30dp"
         android:layout_marginTop="23dp"
         android:text="ora"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/DataSettata"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dataAttuale"
-        app:layout_constraintVertical_bias="0.094" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
+        android:textAlignment="center"
+        android:background="@drawable/round_corner"
         android:id="@+id/DataSettata"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="170dp"
+        android:layout_height="30dp"
         android:text="Imposta una data:"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -58,17 +68,20 @@
 
     <TextView
         android:id="@+id/OraSettata"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
+        android:layout_width="170dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="45dp"
-        android:text="Imposta l'orario"
+        android:background="@drawable/round_corner"
+        android:text="Imposta l'orario:"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.58"
+        app:layout_constraintHorizontal_bias="0.628"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DataSettata"
-        app:layout_constraintVertical_bias="0.423" />
+        app:layout_constraintVertical_bias="0.419" />
 
     <Button
         android:id="@+id/SetData"
@@ -113,8 +126,8 @@
 
     <Button
         android:id="@+id/goBackHome"
-        android:layout_width="62dp"
-        android:layout_height="57dp"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
         android:layout_marginTop="12dp"
         android:onClick="goBackHome"
         app:icon="@drawable/back"

@@ -17,7 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.128"
-        app:srcCompat="@drawable/fotocamera" />
+        app:srcCompat="@drawable/fotocamera"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/parkingFinder"
@@ -35,9 +36,11 @@
         app:layout_constraintVertical_bias="0.621" />
 
     <TextView
+        android:textAlignment="center"
+        android:background="@drawable/round_corner"
         android:id="@+id/scrittaSosta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="170dp"
+        android:layout_height="35dp"
         android:text="La sosta termina il:"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -48,9 +51,11 @@
         app:layout_constraintVertical_bias="0.078" />
 
     <TextView
+        android:textAlignment="center"
+        android:background="@drawable/round_corner"
         android:id="@+id/dataScelta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="170dp"
+        android:layout_height="40dp"
         android:text="Data"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,9 +66,11 @@
         app:layout_constraintVertical_bias="0.042" />
 
     <TextView
+        android:textAlignment="center"
+        android:background="@drawable/round_corner"
         android:id="@+id/scrittaSosta2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="170dp"
+        android:layout_height="35dp"
         android:layout_marginTop="24dp"
         android:text="Alle:"
         android:textSize="20sp"
@@ -72,9 +79,11 @@
         app:layout_constraintTop_toBottomOf="@+id/dataScelta" />
 
     <TextView
+        android:textAlignment="center"
+        android:background="@drawable/round_corner"
         android:id="@+id/oraScelta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="170dp"
+        android:layout_height="40dp"
         android:text="ora"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -86,8 +95,8 @@
 
     <Button
         android:id="@+id/goBack"
-        android:layout_width="51dp"
-        android:layout_height="48dp"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
         android:layout_marginTop="12dp"
 
         app:icon="@drawable/back"
