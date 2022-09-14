@@ -36,11 +36,12 @@
         app:layout_constraintVertical_bias="0.621" />
 
     <TextView
+        android:gravity="center"
         android:textAlignment="center"
         android:background="@drawable/round_corner"
         android:id="@+id/scrittaSosta"
         android:layout_width="170dp"
-        android:layout_height="35dp"
+        android:layout_height="30dp"
         android:text="La sosta termina il:"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -51,11 +52,12 @@
         app:layout_constraintVertical_bias="0.078" />
 
     <TextView
+        android:gravity="center"
         android:textAlignment="center"
         android:background="@drawable/round_corner"
         android:id="@+id/dataScelta"
         android:layout_width="170dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:text="Data"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -66,11 +68,12 @@
         app:layout_constraintVertical_bias="0.042" />
 
     <TextView
+        android:gravity="center"
         android:textAlignment="center"
         android:background="@drawable/round_corner"
         android:id="@+id/scrittaSosta2"
         android:layout_width="170dp"
-        android:layout_height="35dp"
+        android:layout_height="30dp"
         android:layout_marginTop="24dp"
         android:text="Alle:"
         android:textSize="20sp"
@@ -79,11 +82,12 @@
         app:layout_constraintTop_toBottomOf="@+id/dataScelta" />
 
     <TextView
+        android:gravity="center"
         android:textAlignment="center"
         android:background="@drawable/round_corner"
         android:id="@+id/oraScelta"
         android:layout_width="170dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:text="ora"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -22,9 +22,10 @@
         />
 
     <TextView
+        android:gravity="center"
         android:id="@+id/dataAttuale"
-        android:layout_width="170dp"
-        android:layout_height="30dp"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:background="@drawable/round_corner"
         android:text="data"
         android:textAlignment="center"
@@ -37,13 +38,14 @@
         app:layout_constraintVertical_bias="0.083" />
 
     <TextView
-        android:textAlignment="center"
-        android:background="@drawable/round_corner"
+        android:gravity="center"
         android:id="@+id/OraAttuale"
-        android:layout_width="170dp"
-        android:layout_height="30dp"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_marginTop="23dp"
+        android:background="@drawable/round_corner"
         android:text="ora"
+        android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/DataSettata"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,36 +54,38 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:textAlignment="center"
-        android:background="@drawable/round_corner"
         android:id="@+id/DataSettata"
-        android:layout_width="170dp"
-        android:layout_height="30dp"
+        android:layout_width="190dp"
+        android:layout_height="50dp"
+        android:background="@drawable/round_corner"
+        android:gravity="center"
         android:text="Imposta una data:"
+        android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.672" />
+        app:layout_constraintVertical_bias="0.71" />
 
     <TextView
         android:id="@+id/OraSettata"
-        android:layout_width="170dp"
-        android:layout_height="30dp"
+        android:layout_width="190dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="45dp"
         android:background="@drawable/round_corner"
+        android:gravity="center"
         android:text="Imposta l'orario:"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.628"
+        app:layout_constraintHorizontal_bias="0.643"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DataSettata"
-        app:layout_constraintVertical_bias="0.419" />
+        app:layout_constraintVertical_bias="0.245" />
 
     <Button
         android:id="@+id/SetData"
