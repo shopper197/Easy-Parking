@@ -22,11 +22,11 @@
         />
 
     <TextView
-        android:gravity="center"
         android:id="@+id/dataAttuale"
-        android:layout_width="100dp"
+        android:layout_width="130dp"
         android:layout_height="50dp"
         android:background="@drawable/round_corner"
+        android:gravity="center"
         android:text="data"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -38,12 +38,12 @@
         app:layout_constraintVertical_bias="0.083" />
 
     <TextView
-        android:gravity="center"
         android:id="@+id/OraAttuale"
-        android:layout_width="100dp"
+        android:layout_width="130dp"
         android:layout_height="50dp"
         android:layout_marginTop="23dp"
         android:background="@drawable/round_corner"
+        android:gravity="center"
         android:text="ora"
         android:textAlignment="center"
         android:textSize="20sp"

@@ -229,7 +229,7 @@ class ParkingActivity2 : AppCompatActivity() {
 
         val intent = Intent(applicationContext, Notification::class.java)
         val title = "Manca poco tempo"
-        val message= "La tua sosta Termina tra 15 minuti"
+        val message= "La tua sosta termina tra 15 minuti"
         intent.putExtra(messageExtra, message)
         val pendingIntent = PendingIntent.getBroadcast(
             applicationContext,
